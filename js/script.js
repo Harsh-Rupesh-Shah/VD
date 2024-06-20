@@ -76,11 +76,10 @@
 	if ($('.main-slider-carousel').length) {
 		$('.main-slider-carousel').owlCarousel({
 			loop:true,
-			margin:0,
-			nav:true,
-			smartSpeed: 500,
-			autoplay: 6000,
-			autoplayTimeout:700000,
+			margin:10,
+			autoplay:true,
+			autoplayTimeout:3000,
+			autoplayHoverPause:true,
 			navText: [ '<span class="fa fa-angle-left"></span>', '<span class="fa fa-angle-right"></span>' ],
 			responsive:{
 				0:{
@@ -97,6 +96,8 @@
 				}
 			}
 		});
+
+		
 	}
 	
 	
