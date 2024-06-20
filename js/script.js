@@ -106,6 +106,8 @@
 		
 		$('.mobile-menu .menu-box').mCustomScrollbar();
 		
+		
+		
 		var mobileMenuContent = $('.main-header .nav-outer .main-menu').html();
 		$('.mobile-menu .menu-box .menu-outer').append(mobileMenuContent);
 		$('.sticky-header .main-menu').append(mobileMenuContent);
