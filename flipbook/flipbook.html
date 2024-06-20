@@ -13,14 +13,16 @@
             align-items: center;
             height: 100vh;
             margin: 0;
+            padding: 20px;  /* Add padding to body for some space around the content */
             background-color: #f0f0f0;
             overflow: hidden;
+            border-radius: 5%;
         }
         #flipbook-container {
-            width: 90%;
-            max-width: 800px;
-            height: 90%;
-            max-height: 600px;
+            width: 95%;
+            max-width: 1000px;  /* Increase max-width for larger coverage */
+            height: 80%;  /* Decrease height to leave space for controls */
+            max-height: 700px;  /* Adjust max-height for larger coverage */
             margin-bottom: 20px;
             border: 1px solid #ccc;
             background-color: #fff;
@@ -29,6 +31,7 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
+            padding: 10px;  /* Add padding inside the container */
         }
         #flipbook {
             width: 100%;
@@ -48,15 +51,19 @@
             align-items: center;
             width: 90%;
             max-width: 800px;
+            margin-top: 10px;  /* Add margin-top to the controls for space between flipbook and controls */
+            position: relative;
+            z-index: 1;
+            padding-bottom: 30px;
         }
         .controls button, .controls input {
             padding: 10px;
             font-size: 16px;
-            background-color: #007bff;
-            color: #fff;
+            background-color: #f3f0ed;  /* Change button background color */
+            color: #000;  /* Change text color to black for better readability */
             border: none;
             cursor: pointer;
-            margin: 0 5px;
+            margin: 0 5px;  /* Add margin between the buttons */
             border-radius: 5px;
             display: flex;
             align-items: center;
@@ -69,9 +76,9 @@
         .controls input {
             width: 60px;
             text-align: center;
-            color: #007bff;
+            color: #000; /* Change the text color to black */
             background-color: #fff;
-            border: 1px solid #007bff;
+            border: 1px solid #000; /* Change the border color to black */
             border-radius: 5px;
             padding: 5px;
         }
@@ -83,6 +90,18 @@
         .controls i {
             font-size: 20px;
         }
+        .controls .download-btn {
+            background-color: #4CAF50; /* Green background */
+            color: white; /* White text */
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .controls .download-btn:hover {
+            background-color: #45a049; /* Darker green */
+        }
     </style>
 </head>
 <body>
@@ -93,6 +112,7 @@
         <button id="prev" disabled><i class="fas fa-arrow-left"></i></button>
         <input type="number" id="pageNumber" min="1" placeholder="Page #">
         <button id="next"><i class="fas fa-arrow-right"></i></button>
+        <button class="download-btn" id="download"><i class="fas fa-download"></i> Download PDF</button>
     </div>
 
     <!-- Load jQuery -->
@@ -112,6 +132,7 @@
             const prevButton = document.getElementById('prev');
             const nextButton = document.getElementById('next');
             const pageNumberInput = document.getElementById('pageNumber');
+            const downloadButton = document.getElementById('download');
             let scale = 1.0;
 
             pdfjsLib.getDocument(url).promise.then(function(pdf) {
@@ -203,6 +224,14 @@
                 }
             }).catch(function(error) {
                 console.error('Error getting document:', error);
+            });
+
+            // Download PDF on button click
+            downloadButton.addEventListener('click', function() {
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'downloaded.pdf';
+                link.click();
             });
         });
     </script>
