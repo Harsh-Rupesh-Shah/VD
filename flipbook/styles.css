@@ -24,6 +24,9 @@ body {
     align-items: center;
     overflow: hidden;
     padding: 10px;  /* Add padding inside the container */
+    background-image: url(/images/logo.png), url(/images/logo.png);
+    background-repeat: no-repeat, no-repeat;
+    background-position: 15% 50%, 85% 50%;
 }
 #flipbook {
     width: 100%;
@@ -100,3 +103,4 @@ body {
 #download-button{
     margin-left: 10px;
 }
+
