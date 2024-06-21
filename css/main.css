@@ -877,9 +877,9 @@ img {
 .main-menu .navigation>li:before {
 	position: absolute;
 	content: '';
-	left: 0px;
+	left: 45px;
 	bottom: 55px;
-	right: 0px;
+	right: 45px;
 	height: 1px;
 	opacity: 0;
 	background-color: #ffffff;
