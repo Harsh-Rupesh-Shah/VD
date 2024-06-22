@@ -719,21 +719,22 @@ img {
 .main-header.header-style-two {
 	position: relative;
 	border-bottom: 1px solid #d5d5d5;
+	background-color: #102f5e;
 }
 
 .main-header.header-style-two.fixed-header .header-upper {
-	background-color: #ffffff;
+	background-color: #102f5e;
 	border-bottom: 1px solid rgba(0, 0, 0, 0.10);
 }
 
 .main-header.header-style-two .header-upper .outer-box .mobile-nav-toggler,
 .header-style-two .header-upper .language-list li a,
 .header-style-two .main-menu .navigation>li>a {
-	color: #000000;
+	color: white;
 }
 
 .header-style-two .main-menu .navigation>li:before {
-	background-color: #000000;
+	background-color: white;
 }
 
 /* Sticky Header */
@@ -753,6 +754,7 @@ img {
 	-webkit-transition: all 500ms ease;
 	-ms-transition: all 500ms ease;
 	-o-transition: all 500ms ease;
+
 }
 
 .sticky-header .logo {

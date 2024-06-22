@@ -283,11 +283,11 @@
 	.main-header,
 	.main-header.fixed-header{
 		position:relative;
-		background-color:#111111;
+		background-color:#102f5e;
 	}
 	
 	.main-header.header-style-two{
-		background-color:#ffffff;
+		background-color:#102f5e;
 	}
 	
 	.main-menu .navigation > li{
@@ -971,7 +971,7 @@
 	}
 	
 	.header-style-two .nav-outer .mobile-nav-toggler{
-		color:#111111;
+		color:white;
 	}
 	
 	.banner-section .content-boxed span{
