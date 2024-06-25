@@ -49,20 +49,20 @@
 <div class="page-wrapper">
  	
     <!-- Main Header-->
-    <header class="main-header header-style-two">
+	<header class="main-header header-style-two project">
     	
     	<!-- Header Upper -->
         <div class="header-upper">
-        	<div class="outer-container">
+        	<div class="outer-container auto-container">
             	<div class="inner-container clearfix">
                 	
-                	<div class="pull-left logo-box">
+                	<!-- <div class="pull-left logo-box">
                     	<div class="logo"><a href="index.html"><img src="images/logo-4.png" alt="" title=""></a></div>
-                    </div>
+                    </div> -->
 					
                    	<div class="nav-outer pull-left clearfix">
 						<!-- Mobile Navigation Toggler -->
-                        <div class="mobile-nav-toggler"> <span class="icon ti-menu"></span></div>
+                        <div class="mobile-nav-toggler"><span class="icon ti-menu"></span></div>
 						<!-- Main Menu -->
 						<nav class="main-menu navbar-expand-md">
 							<div class="navbar-header">
@@ -77,13 +77,27 @@
 								<ul class="navigation clearfix">
 									<li><a href="index.html">Home</a></li>
 									<li><a href="about.html">About</a></li>
+									<li class="logo-before">
+										<div class="pull-left logo-box">
+											<div class="logo">
+												<a href="index.html" id="logo-img">
+												<img id="logo-img2" src="images/logo.png" alt="" title="">
+											</a>
+											</div>
+										</div>					
+									</li>
 									<li class="dropdown"><a href="#">Projects</a>
 										<ul>
 											<li><a href="projects.html">Projects</a></li>
 											<li><a href="projects-detail.html">Projects Detail</a></li>
 										</ul>
 									</li>
-									
+									<!-- <li class="dropdown"><a href="#">Blog</a>
+										<ul>
+											<li><a href="blog.html">Our Blog</a></li>
+											<li><a href="blog-detail.html">Blog Detail</a></li>
+										</ul>
+									</li> -->
 									<li class="current"><a href="contact.html">Contact</a></li>
 								</ul>
 							</div>
@@ -94,9 +108,12 @@
 					
 					<!-- Outer Box -->
 					<div class="outer-box clearfix">
-						
+						<!-- <ul class="language-list">
+							<li><a href="#">End</a></li>
+							<li><a href="#">Fra</a></li>
+						</ul> -->
 						<!-- Mobile Navigation Toggler -->
-                        <div class="mobile-nav-toggler">menu <span class="icon ion-android-menu"></span></div>
+                        <div class="mobile-nav-toggler">menu <span class="icon fas fa-stream"></span></div>
 					</div>
                    
                 </div>
@@ -173,8 +190,9 @@
 					<!-- Contact Form -->
 					<div class="contact-form">
 						<!-- Contact Form -->
-						<form method="post" action="sendemail.php" id="contact-form">
+						<form id="contact-form" action="https://api.web3forms.com/submit" method="POST">
 							<div class="row clearfix">
+								<input type="hidden" name="access_key" value="95f75654-01cc-4837-86b7-178dd7dc0905">
 								<div class="col-lg-4 col-md-6 col-sm-12 form-group">
 									<input type="text" name="username" placeholder="Enter your name..." required>
 								</div>
@@ -184,7 +202,7 @@
 								</div>
 
 								<div class="col-lg-4 col-md-12 col-sm-12 form-group">
-									<input type="text" name="subject" placeholder="Subject (optional)" required>
+									<input type="text" name="subject" placeholder="Subject (optional)" >
 								</div>
 
 								<div class="col-lg-12 col-md-12 col-sm-12 form-group">
