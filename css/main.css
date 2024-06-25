@@ -4824,3 +4824,22 @@ img {
 #concept-title{
 	padding-top: 100px;
 }
+
+.whats-app {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    bottom: 10px;
+    left: 15px;
+    background-color: #08ef17;
+    color: #000;
+    border-radius: 50px;
+    text-align: center;
+    font-size: 30px;
+    box-shadow: 2px 2px 3px #999;
+    z-index: 100;
+}
+
+.my-float {
+	margin-top: 22.5%;
+}
