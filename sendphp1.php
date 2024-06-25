@@ -1,35 +1,27 @@
 <?php
-// If the form is submitted
-if (isset($_POST['submit-form'])) {
-  // Set variables from the form
-  $username = $_POST['username'];
-  $email = $_POST['email'];
-  $subject = $_POST['subject'];
-  $message = $_POST['message'];
+if($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $to = "manavrathod115@gmail.com"; // Change this to your email address
+    $subject = "Contact Form Submission";
 
-  // Email configurations (replace with your own)
-  $to = 'manavrathod115@gmail.com'; // Replace with your recipient email
-  $from = $email; // Replace with your email
-  $fromName = 'Victoria Developers'; // Replace with your website name
+    $name = $_POST['username'];
+    $email = $_POST['email'];
+    $subject = $_POST['subject'];
+    $message = $_POST['message'];
 
-  // Prepare the email body
-  $body = "Name: $username \n";
-  $body .= "Email: $email \n";
-  $body .= "Subject: $subject \n";
-  $body .= "Message: \n $message";
+    $headers = "From: $email\r\n";
+    $headers .= "Reply-To: $email\r\n";
+    $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
 
-  // Set email headers
-  $headers = "From: $fromName <$from>";
-  $headers .= "Reply-To: $email \r\n";
-  $headers .= "Content-Type: text/plain; charset=UTF-8 \r\n";
+    $body = "<h2>Contact Form Submission</h2>
+             <p><strong>Name:</strong> {$name}</p>
+             <p><strong>Email:</strong> {$email}</p>
+             <p><strong>Subject:</strong> {$subject}</p>
+             <p><strong>Message:</strong><br>{$message}</p>";
 
-  // Try to send the email
-  if (mail($to, $subject, $body, $headers)) {
-    // Email sent successfully
-    echo 'Thanks for contacting us! We will be in touch shortly.';
-  } else {
-    // Email sending failed
-    echo 'There was an error sending your message. Please try again later.';
-  }
+    if(mail($to, $subject, $body, $headers)) {
+        echo "<script>alert('Your message has been sent successfully!'); window.location = 'contact.html';</script>";
+    } else {
+        echo "<script>alert('There was an error sending your message. Please try again later.'); window.location = 'contact.html';</script>";
+    }
 }
 ?>
