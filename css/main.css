@@ -494,12 +494,17 @@ img {
 	/* padding-top: 20%; */
 	max-width: 100%;
 	height: auto;
+
 }
 
 #logo-img {
 	position: relative;
 	top: 17px;
 	left: 10px;
+}
+
+#experiance-img{
+	padding-left: 15%;
 }
 
 /*** 
@@ -2028,6 +2033,7 @@ img {
 
 .experiance-section .title-column .inner-column {
 	position: relative;
+	margin-left: 8.5%;
 }
 
 .experiance-section .title-column .image {
@@ -2042,6 +2048,11 @@ img {
 	font-weight: 600;
 	line-height: 1.1em;
 	margin-bottom: 20px;
+	padding-left: 10%;
+}
+
+#experiance-text{
+	padding-left: 10%;
 }
 
 .experiance-section .title-column .text {
@@ -3147,6 +3158,7 @@ img {
 	-webkit-transition: all 300ms ease;
 	-ms-transition: all 300ms ease;
 	-o-transition: all 300ms ease;
+	/* padding: 0px 50px; */
 }
 
 .main-footer .footer-page-nav li a:hover {
