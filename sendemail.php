@@ -1,8 +1,8 @@
 <?php
 
 // Define some constants
-define("RECIPIENT_NAME", "John Doe");
-define("RECIPIENT_EMAIL", "demo1.trial1@gmail.com");
+define("RECIPIENT_NAME", "Manav Rathod");
+define("RECIPIENT_EMAIL", "manavrathod115@gmail.com");
 
 // Function to sanitize input
 function sanitizeInput($input) {
