@@ -1,31 +1,40 @@
 <?php
 
 // Define some constants
-define( "RECIPIENT_NAME", "John Doe" );
-define( "RECIPIENT_EMAIL", "demo1.trial1@gmail.com" );
+define("RECIPIENT_NAME", "John Doe");
+define("RECIPIENT_EMAIL", "demo1.trial1@gmail.com");
 
+// Function to sanitize input
+function sanitizeInput($input) {
+    return htmlspecialchars(strip_tags(trim($input)));
+}
 
 // Read the form values
 $success = false;
-$userName = isset( $_POST['username'] ) ? preg_replace( "/[^\.\-\' a-zA-Z0-9]/", "", $_POST['username'] ) : "";
-$senderEmail = isset( $_POST['email'] ) ? preg_replace( "/[^\.\-\' a-zA-Z0-9]/", "", $_POST['email'] ) : "";
-$senderSubject = isset( $_POST['subject'] ) ? preg_replace( "/[^\.\-\' a-zA-Z0-9]/", "", $_POST['subject'] ) : "";
-$message = isset( $_POST['message'] ) ? preg_replace( "/(From:|To:|BCC:|CC:|Message:|Content-Type:)/", "", $_POST['message'] ) : "";
+$userName = isset($_POST['username']) ? sanitizeInput($_POST['username']) : "";
+$senderEmail = isset($_POST['email']) ? filter_var(sanitizeInput($_POST['email']), FILTER_VALIDATE_EMAIL) : "";
+$senderSubject = isset($_POST['subject']) ? sanitizeInput($_POST['subject']) : "";
+$message = isset($_POST['message']) ? sanitizeInput($_POST['message']) : "";
 
 // If all values exist, send the email
-if ( $userName && $senderEmail && $senderSubject && $message) {
-  $recipient = RECIPIENT_NAME . " <" . RECIPIENT_EMAIL . ">";
-  $headers = "From: " . $username . " <" . $senderEmail . ">";
-  $msgBody = " Subject: " . $subject . " Message: " . $message . "";
-  $success = mail( $recipient, $headers, $msgBody );
+if ($userName && $senderEmail && $message) {
+    $recipient = RECIPIENT_NAME . " <" . RECIPIENT_EMAIL . ">";
+    $headers = "From: " . $userName . " <" . $senderEmail . ">";
+    $msgBody = "Subject: " . $senderSubject . "\n\nMessage: " . $message;
+    $success = mail($recipient, $senderSubject, $msgBody, $headers);
 
-  //Set Location After Successsfull Submission
-  header('Location: contact.html?message=Successfull');
-}
-
-else{
-	//Set Location After Unsuccesssfull Submission
-  	header('Location: index.html?message=Failed');	
+    // Set Location After Successful Submission
+    if ($success) {
+        header('Location: contact.html?message=Successful');
+        exit();
+    } else {
+        header('Location: contact.html?message=Failed');
+        exit();
+    }
+} else {
+    // Set Location After Unsuccessful Submission
+    header('Location: contact.html?message=Failed');
+    exit();
 }
 
 ?>

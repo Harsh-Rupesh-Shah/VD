@@ -192,30 +192,26 @@
 						<!-- Contact Form -->
 						<!-- <form id="contact-form" action="https://api.web3forms.com/submit" method="POST"> -->
 							<form id="contact-form" action="sendemail.php" method="POST">
-							<div class="row clearfix">
-								<input type="hidden" name="access_key" value="95f75654-01cc-4837-86b7-178dd7dc0905">
-								<div class="col-lg-4 col-md-6 col-sm-12 form-group">
-									<input type="text" name="username" placeholder="Enter your name..." required>
+								<div class="row clearfix">
+									<!-- <input type="hidden" name="access_key" value="95f75654-01cc-4837-86b7-178dd7dc0905"> -->
+									<div class="col-lg-4 col-md-6 col-sm-12 form-group">
+										<input type="text" name="username" placeholder="Enter your name..." required>
+									</div>
+									<div class="col-lg-4 col-md-6 col-sm-12 form-group">
+										<input type="email" name="email" placeholder="Your Email" required>
+									</div>
+									<div class="col-lg-4 col-md-12 col-sm-12 form-group">
+										<input type="text" name="subject" placeholder="Subject (optional)">
+									</div>
+									<div class="col-lg-12 col-md-12 col-sm-12 form-group">
+										<textarea name="message" placeholder="Here goes your message" required></textarea>
+									</div>
+									<div class="col-lg-12 col-md-12 col-sm-12 text-center form-group">
+										<button class="theme-btn btn-style-one" type="submit" name="submit-form"><span class="txt">Send Message</span></button>
+									</div>
 								</div>
-
-								<div class="col-lg-4 col-md-6 col-sm-12 form-group">
-									<input type="email" name="email" placeholder="Your Email" required>
-								</div>
-
-								<div class="col-lg-4 col-md-12 col-sm-12 form-group">
-									<input type="text" name="subject" placeholder="Subject (optional)" >
-								</div>
-
-								<div class="col-lg-12 col-md-12 col-sm-12 form-group">
-									<textarea name="message" placeholder="Here goes your message"></textarea>
-								</div>
-
-								<div class="col-lg-12 col-md-12 col-sm-12 text-center form-group">
-									<button class="theme-btn btn-style-one" type="submit" name="submit-form"><span class="txt">Send Message</span></button>
-								</div>
-
-							</div>
-						</form>
+							</form>
+							
 
 					</div>
 					<!--End Contact Form -->
