@@ -12,7 +12,7 @@ $subject = 'Test Email';
 $message = 'This is a test email.';
 
 // Attempt to establish SMTP connection
-$smtpConnection = fsockopen($smtpServer, $smtpPort, $errno, $errstr, 30);
+$smtpConnection = fsockopen('tls://' . $smtpServer, $smtpPort, $errno, $errstr, 30);
 if (!$smtpConnection) {
     die("Failed to connect to SMTP server: $errstr ($errno)");
 }
