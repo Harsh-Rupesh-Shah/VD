@@ -1,6 +1,5 @@
 <?php
-
-// Enable error reporting
+// Enable error reporting (for debugging)
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -102,7 +101,10 @@ $message = isset($_POST['message']) ? sanitizeInput($_POST['message']) : "";
 if ($userName && $senderEmail && $message) {
     $recipient = RECIPIENT_NAME . " <" . RECIPIENT_EMAIL . ">";
     $headers = "From: " . $userName . " <" . $senderEmail . ">\r\n";
-    $success = sendSMTPMail($recipient, $senderSubject, $message, $headers);
+    $msgBody = "Subject: " . $senderSubject . "\r\n\r\nMessage: " . $message;
+
+    // Send email using custom SMTP function
+    $success = sendSMTPMail(RECIPIENT_EMAIL, $senderSubject, $msgBody, $headers);
 
     // Redirect after sending email
     if ($success) {
@@ -117,5 +119,4 @@ if ($userName && $senderEmail && $message) {
     header('Location: contact.html?message=Failed');
     exit();
 }
-
 ?>
