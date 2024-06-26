@@ -3,7 +3,7 @@
 // Define some constants
 define("RECIPIENT_NAME", "Manav Rathod");
 define("RECIPIENT_EMAIL", "manavrathod115@gmail.com");
-define("SMTP_SERVER", "info@victoriadevelopers.com"); // Replace with your SMTP server
+define("SMTP_SERVER", "mail.victoriadevelopers.com"); // Replace with your SMTP server
 define("SMTP_PORT", 587); // Usually 587 for TLS or 465 for SSL
 define("SMTP_USERNAME", "info@victoriadevelopers.com"); // Replace with your SMTP username
 define("SMTP_PASSWORD", "OS56xr12@"); // Replace with your SMTP password
