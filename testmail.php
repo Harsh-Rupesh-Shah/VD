@@ -14,10 +14,21 @@ $message = 'This is a test email.';
 stream_context_set_option($smtpConnection, 'ssl', 'crypto_method', STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT);
 
 // Attempt to establish SMTP connection
-$smtpConnection = fsockopen('tls://' . $smtpServer, $smtpPort, $errno, $errstr, 30);
+$smtpConnection = fsockopen('tls://mail.victoriadevelopers.com', 587, $errno, $errstr, 30);
 if (!$smtpConnection) {
     die("Failed to connect to SMTP server: $errstr ($errno)");
+} else {
+    // Set stream context options only if $smtpConnection is valid
+    $options = [
+        'ssl' => [
+            'crypto_method' => STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT, // Specify TLS version if needed
+        ],
+    ];
+    stream_context_set_option($smtpConnection, $options);
 }
+
+// Now $smtpConnection is defined and ready to use for further SMTP commands
+
 
 // Capture server response
 $response = fgets($smtpConnection, 512);
