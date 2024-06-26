@@ -54,6 +54,7 @@ echo "RCPT TO response: $response<br>";
 // Construct email headers and body
 $emailContent = "Subject: $subject\r\n";
 $emailContent .= "From: $from\r\n";
+$emailContent .= "To: $to\r\n"; // Ensure recipient is included in headers
 $emailContent .= "\r\n"; // End of headers, empty line before message body
 $emailContent .= "$message\r\n";
 
