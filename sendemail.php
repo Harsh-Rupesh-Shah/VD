@@ -5,25 +5,18 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// Define some constants
-define("RECIPIENT_NAME", "Manav Rathod");
-define("RECIPIENT_EMAIL", "manavrathod115@gmail.com");
-define("SMTP_SERVER", "mail.victoriadevelopers.com"); // Replace with your SMTP server name
-define("SMTP_PORT", 587); // Usually 587 for TLS or 465 for SSL
-define("SMTP_USERNAME", "info@victoriadevelopers.com"); // Replace with your SMTP username
-define("SMTP_PASSWORD", "your-email-password"); // Replace with your SMTP password
+// Define constants for SMTP settings
+define("RECIPIENT_NAME", "Harsh Shah");
+define("RECIPIENT_EMAIL", "hrsshah04022004@gmail.com");
+define("SMTP_SERVER", "mail.victoriadevelopers.com");
+define("SMTP_PORT", 587);
+define("SMTP_USERNAME", "info@victoriadevelopers.com");
+define("SMTP_PASSWORD", "Batball@123");
 
 // Function to sanitize input
 function sanitizeInput($input) {
     return htmlspecialchars(strip_tags(trim($input)));
 }
-
-// Read the form values
-$success = false;
-$userName = isset($_POST['username']) ? sanitizeInput($_POST['username']) : "";
-$senderEmail = isset($_POST['email']) ? filter_var(sanitizeInput($_POST['email']), FILTER_VALIDATE_EMAIL) : "";
-$senderSubject = isset($_POST['subject']) ? sanitizeInput($_POST['subject']) : "";
-$message = isset($_POST['message']) ? sanitizeInput($_POST['message']) : "";
 
 // Function to send email using SMTP
 function sendSMTPMail($to, $subject, $message, $headers) {
@@ -32,62 +25,86 @@ function sendSMTPMail($to, $subject, $message, $headers) {
     $smtpUsername = SMTP_USERNAME;
     $smtpPassword = SMTP_PASSWORD;
 
+    // Open a socket connection to the SMTP server
     $smtpConnection = fsockopen($smtpServer, $smtpPort, $errno, $errstr, 30);
     if (!$smtpConnection) {
         error_log("Failed to connect to SMTP server: $errstr ($errno)");
         return false;
     }
 
+    // Initial server response
+    $serverResponse = fgets($smtpConnection, 512);
+    error_log("Server response: $serverResponse");
+
+    // Send EHLO command and get server response
     fputs($smtpConnection, "EHLO " . $smtpServer . "\r\n");
-    $response = fgets($smtpConnection, 512);
-    error_log("EHLO response: $response");
+    $serverResponse = fgets($smtpConnection, 512);
+    error_log("EHLO response: $serverResponse");
 
+    // Start TLS if required
+    fputs($smtpConnection, "STARTTLS\r\n");
+    $serverResponse = fgets($smtpConnection, 512);
+    error_log("STARTTLS response: $serverResponse");
+
+    // Authenticate with the SMTP server
     fputs($smtpConnection, "AUTH LOGIN\r\n");
-    $response = fgets($smtpConnection, 512);
-    error_log("AUTH LOGIN response: $response");
-    
+    $serverResponse = fgets($smtpConnection, 512);
+    error_log("AUTH LOGIN response: $serverResponse");
+
+    // Send base64 encoded username
     fputs($smtpConnection, base64_encode($smtpUsername) . "\r\n");
-    $response = fgets($smtpConnection, 512);
-    error_log("Username response: $response");
-    
+    $serverResponse = fgets($smtpConnection, 512);
+    error_log("Username response: $serverResponse");
+
+    // Send base64 encoded password
     fputs($smtpConnection, base64_encode($smtpPassword) . "\r\n");
-    $response = fgets($smtpConnection, 512);
-    error_log("Password response: $response");
+    $serverResponse = fgets($smtpConnection, 512);
+    error_log("Password response: $serverResponse");
 
+    // Set sender and recipient
     fputs($smtpConnection, "MAIL FROM: <" . $smtpUsername . ">\r\n");
-    $response = fgets($smtpConnection, 512);
-    error_log("MAIL FROM response: $response");
-    
-    fputs($smtpConnection, "RCPT TO: <" . $to . ">\r\n");
-    $response = fgets($smtpConnection, 512);
-    error_log("RCPT TO response: $response");
-    
-    fputs($smtpConnection, "DATA\r\n");
-    $response = fgets($smtpConnection, 512);
-    error_log("DATA response: $response");
-    
-    fputs($smtpConnection, "Subject: " . $subject . "\r\n" . $headers . "\r\n" . $message . "\r\n.\r\n");
-    $response = fgets($smtpConnection, 512);
-    error_log("Message send response: $response");
-    
-    fputs($smtpConnection, "QUIT\r\n");
-    $response = fgets($smtpConnection, 512);
-    error_log("QUIT response: $response");
+    $serverResponse = fgets($smtpConnection, 512);
+    error_log("MAIL FROM response: $serverResponse");
 
-    $response = fgets($smtpConnection, 512);
+    fputs($smtpConnection, "RCPT TO: <" . $to . ">\r\n");
+    $serverResponse = fgets($smtpConnection, 512);
+    error_log("RCPT TO response: $serverResponse");
+
+    // Send email data
+    fputs($smtpConnection, "DATA\r\n");
+    $serverResponse = fgets($smtpConnection, 512);
+    error_log("DATA response: $serverResponse");
+
+    // Construct email headers and body
+    $emailContent = "Subject: " . $subject . "\r\n" . $headers . "\r\n\r\n" . $message . "\r\n";
+    fputs($smtpConnection, $emailContent . "\r\n.\r\n");
+    $serverResponse = fgets($smtpConnection, 512);
+    error_log("Message send response: $serverResponse");
+
+    // Quit SMTP session
+    fputs($smtpConnection, "QUIT\r\n");
+    $serverResponse = fgets($smtpConnection, 512);
+    error_log("QUIT response: $serverResponse");
+
     fclose($smtpConnection);
 
-    return strpos($response, '250') !== false;
+    // Check if email was sent successfully (expecting 250 OK response)
+    return strpos($serverResponse, '250') !== false;
 }
+
+// Read form input (assuming this script is processing form submission)
+$userName = isset($_POST['username']) ? sanitizeInput($_POST['username']) : "";
+$senderEmail = isset($_POST['email']) ? filter_var(sanitizeInput($_POST['email']), FILTER_VALIDATE_EMAIL) : "";
+$senderSubject = isset($_POST['subject']) ? sanitizeInput($_POST['subject']) : "";
+$message = isset($_POST['message']) ? sanitizeInput($_POST['message']) : "";
 
 // If all values exist, send the email
 if ($userName && $senderEmail && $message) {
     $recipient = RECIPIENT_NAME . " <" . RECIPIENT_EMAIL . ">";
-    $headers = "From: " . $userName . " <" . $senderEmail . ">";
-    $msgBody = "Subject: " . $senderSubject . "\n\nMessage: " . $message;
-    $success = sendSMTPMail($recipient, $senderSubject, $msgBody, $headers);
+    $headers = "From: " . $userName . " <" . $senderEmail . ">\r\n";
+    $success = sendSMTPMail($recipient, $senderSubject, $message, $headers);
 
-    // Set Location After Successful Submission
+    // Redirect after sending email
     if ($success) {
         header('Location: contact.html?message=Successful');
         exit();
@@ -96,7 +113,7 @@ if ($userName && $senderEmail && $message) {
         exit();
     }
 } else {
-    // Set Location After Unsuccessful Submission
+    // Redirect if form input is incomplete
     header('Location: contact.html?message=Failed');
     exit();
 }
