@@ -51,16 +51,22 @@ fputs($smtpConnection, "RCPT TO: <$to>\r\n");
 $response = fgets($smtpConnection, 512);
 echo "RCPT TO response: $response<br>";
 
+// Construct email headers and body
+$emailContent = "Subject: $subject\r\n";
+$emailContent .= "From: $from\r\n";
+$emailContent .= "\r\n"; // End of headers, empty line before message body
+$emailContent .= "$message\r\n";
+
 // Send DATA command and capture server response
 fputs($smtpConnection, "DATA\r\n");
 $response = fgets($smtpConnection, 512);
 echo "DATA response: $response<br>";
 
-// Construct email headers and body
-$emailContent = "Subject: $subject\r\n\r\n$message\r\n";
+// Send email content and end with period (.)
 fputs($smtpConnection, $emailContent . "\r\n.\r\n");
 $response = fgets($smtpConnection, 512);
 echo "Message send response: $response<br>";
+
 
 // Send QUIT command and capture server response
 fputs($smtpConnection, "QUIT\r\n");
