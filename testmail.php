@@ -11,6 +11,8 @@ $to = 'hrsshah04022004@gmail.com';
 $subject = 'Test Email';
 $message = 'This is a test email.';
 
+stream_context_set_option($smtpConnection, 'ssl', 'crypto_method', STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT);
+
 // Attempt to establish SMTP connection
 $smtpConnection = fsockopen('tls://' . $smtpServer, $smtpPort, $errno, $errstr, 30);
 if (!$smtpConnection) {
