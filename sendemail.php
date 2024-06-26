@@ -1,12 +1,17 @@
 <?php
 
+// Enable error reporting
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 // Define some constants
 define("RECIPIENT_NAME", "Manav Rathod");
 define("RECIPIENT_EMAIL", "manavrathod115@gmail.com");
-define("SMTP_SERVER", "mail.victoriadevelopers.com"); // Replace with your SMTP server
+define("SMTP_SERVER", "mail.victoriadevelopers.com"); // Replace with your SMTP server name
 define("SMTP_PORT", 587); // Usually 587 for TLS or 465 for SSL
 define("SMTP_USERNAME", "info@victoriadevelopers.com"); // Replace with your SMTP username
-define("SMTP_PASSWORD", "OS56xr12@"); // Replace with your SMTP password
+define("SMTP_PASSWORD", "your-email-password"); // Replace with your SMTP password
 
 // Function to sanitize input
 function sanitizeInput($input) {
@@ -29,29 +34,45 @@ function sendSMTPMail($to, $subject, $message, $headers) {
 
     $smtpConnection = fsockopen($smtpServer, $smtpPort, $errno, $errstr, 30);
     if (!$smtpConnection) {
-        echo "Failed to connect to SMTP server: $errstr ($errno)";
+        error_log("Failed to connect to SMTP server: $errstr ($errno)");
         return false;
     }
 
     fputs($smtpConnection, "EHLO " . $smtpServer . "\r\n");
-    fgets($smtpConnection, 512);
+    $response = fgets($smtpConnection, 512);
+    error_log("EHLO response: $response");
 
     fputs($smtpConnection, "AUTH LOGIN\r\n");
-    fgets($smtpConnection, 512);
+    $response = fgets($smtpConnection, 512);
+    error_log("AUTH LOGIN response: $response");
+    
     fputs($smtpConnection, base64_encode($smtpUsername) . "\r\n");
-    fgets($smtpConnection, 512);
+    $response = fgets($smtpConnection, 512);
+    error_log("Username response: $response");
+    
     fputs($smtpConnection, base64_encode($smtpPassword) . "\r\n");
-    fgets($smtpConnection, 512);
+    $response = fgets($smtpConnection, 512);
+    error_log("Password response: $response");
 
     fputs($smtpConnection, "MAIL FROM: <" . $smtpUsername . ">\r\n");
-    fgets($smtpConnection, 512);
+    $response = fgets($smtpConnection, 512);
+    error_log("MAIL FROM response: $response");
+    
     fputs($smtpConnection, "RCPT TO: <" . $to . ">\r\n");
-    fgets($smtpConnection, 512);
+    $response = fgets($smtpConnection, 512);
+    error_log("RCPT TO response: $response");
+    
     fputs($smtpConnection, "DATA\r\n");
-    fgets($smtpConnection, 512);
+    $response = fgets($smtpConnection, 512);
+    error_log("DATA response: $response");
+    
     fputs($smtpConnection, "Subject: " . $subject . "\r\n" . $headers . "\r\n" . $message . "\r\n.\r\n");
-    fgets($smtpConnection, 512);
+    $response = fgets($smtpConnection, 512);
+    error_log("Message send response: $response");
+    
     fputs($smtpConnection, "QUIT\r\n");
+    $response = fgets($smtpConnection, 512);
+    error_log("QUIT response: $response");
 
     $response = fgets($smtpConnection, 512);
     fclose($smtpConnection);
