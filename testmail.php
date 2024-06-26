@@ -26,6 +26,21 @@ fputs($smtpConnection, "EHLO example.com\r\n");
 $response = fgets($smtpConnection, 512);
 echo "EHLO response: $response<br>";
 
+// Check if STARTTLS is supported and initiate TLS connection if possible
+if (strpos($response, 'STARTTLS') !== false) {
+    fputs($smtpConnection, "STARTTLS\r\n");
+    $tls_response = fgets($smtpConnection, 512);
+    echo "STARTTLS response: $tls_response<br>";
+
+    if (strpos($tls_response, '220') !== false) {
+        // Upgrade connection to TLS
+        stream_socket_enable_crypto($smtpConnection, true, STREAM_CRYPTO_METHOD_TLS_CLIENT);
+        fputs($smtpConnection, "EHLO example.com\r\n");
+        $response = fgets($smtpConnection, 512);
+        echo "EHLO after STARTTLS response: $response<br>";
+    }
+}
+
 // Send AUTH LOGIN command and capture server response
 fputs($smtpConnection, "AUTH LOGIN\r\n");
 $response = fgets($smtpConnection, 512);
@@ -67,7 +82,6 @@ echo "DATA response: $response<br>";
 fputs($smtpConnection, $emailContent . "\r\n.\r\n");
 $response = fgets($smtpConnection, 512);
 echo "Message send response: $response<br>";
-
 
 // Send QUIT command and capture server response
 fputs($smtpConnection, "QUIT\r\n");
